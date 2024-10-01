@@ -151,6 +151,11 @@ test('leading ../ with absolute on', async () => {
   assert.deepEqual(files.sort(), [`${cwd.replaceAll('\\', '/')}b/a.txt`, `${cwd.replaceAll('\\', '/')}b/b.txt`]);
 });
 
+test('leading ../ with ignore', async () => {
+  const files = await glob({ patterns: ['../b/*.txt'], ignore: ["**/a.txt"], cwd: path.join(cwd, 'a') });
+  assert.deepEqual(files.sort(), ['../b/b.txt']);
+});
+
 test('bracket expanding', async () => {
   const files = await glob({ patterns: ['a/{a,b}.txt'], cwd });
   assert.deepEqual(files.sort(), ['a/a.txt', 'a/b.txt']);
